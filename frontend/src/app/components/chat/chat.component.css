@@ -1,0 +1,55 @@
+:host { display: block; }
+.pagina { min-height: 100dvh; padding: 28px 20px; display: grid; place-items: center; }
+.painel { width: 100%; max-width: 900px; height: min(860px, calc(100dvh - 56px)); min-height: 480px; display: flex; flex-direction: column; background: #fff; border: 1px solid #e0e6ed; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 60px #172b4d0d; }
+.cabecalho { display: flex; align-items: center; gap: 18px; padding: 24px 30px; background: #142b48; color: #fff; }
+.marca { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 15px; background: #30c7a0; color: #102b3b; font-size: 30px; font-weight: 800; flex-shrink: 0; }
+.sobretitulo { margin: 0 0 5px; color: #90b6cf; font-size: 10px; font-weight: 700; letter-spacing: 2px; }
+h1 { margin: 0; font-size: 25px; letter-spacing: -.6px; }
+.subtitulo { margin: 6px 0 0; color: #c1cede; font-size: 13px; }
+.formulario { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.identificacao { padding: 18px 30px 14px; border-bottom: 1px solid #e8edf2; }
+label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; }
+input { width: 100%; min-width: 0; padding: 12px 14px; background: #fff; border: 1px solid #d4dde6; border-radius: 10px; color: #20334b; font: inherit; font-size: 14px; }
+.identificacao input { max-width: 420px; }
+input::placeholder { color: #738194; }
+input[readonly] { background: #f3f6f9; color: #4d6077; }
+input[aria-invalid="true"] { border-color: #b93838; }
+.ajuda { margin: 7px 0 0; color: #68788c; font-size: 11px; line-height: 1.5; }
+.erro { color: #b02b2b; }
+.conversa { flex: 1; min-height: 0; overflow-y: auto; padding: 26px 30px; background: #f8fafc; }
+.mensagem { display: flex; margin-bottom: 18px; }
+.mensagem.usuario { justify-content: flex-end; }
+.balao { max-width: 80%; min-width: 160px; padding: 15px 18px; border: 1px solid #e1e8f0; border-radius: 4px 16px 16px; background: #fff; }
+.usuario .balao { background: #e1f5ee; border-color: #c6e9dd; border-radius: 16px 4px 16px 16px; }
+.meta { display: flex; justify-content: space-between; gap: 18px; color: #586b80; font-size: 10px; font-weight: 600; }
+time { font-weight: 400; }
+.texto { margin: 8px 0 0; font-size: 14px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+.digitando { display: flex; align-items: center; gap: 10px; color: #63758a; font-size: 12px; padding: 6px 0; }
+.pontos { color: #16866e; letter-spacing: 2px; animation: pulsar 1.2s ease-in-out infinite; }
+.aviso { margin: 12px 0 0; color: #765218; font-size: 12px; line-height: 1.5; }
+.indicador { display: inline-block; margin-top: 12px; color: #16735d; font-size: 11px; }
+.detalhes { margin-top: 13px; padding-top: 10px; border-top: 1px solid #e8edf2; font-size: 11px; color: #5b6d80; }
+summary { cursor: pointer; }
+dl { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 15px; margin-bottom: 0; }
+dd { margin: 0; overflow-wrap: anywhere; }
+.compositor { padding: 18px 30px; border-top: 1px solid #e1e8f0; }
+.linha-envio { display: flex; gap: 10px; }
+button { border: 0; border-radius: 10px; padding: 0 21px; background: #167a63; color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+button span { margin-left: 8px; font-size: 18px; }
+button:hover:not(:disabled) { background: #11614f; }
+button:disabled { opacity: .6; cursor: wait; }
+:is(input, button, summary, .conversa):focus-visible { outline: 3px solid #35af95; outline-offset: 3px; }
+@keyframes pulsar { 50% { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) { .pontos { animation: none; } }
+@media (max-width: 600px) {
+  .pagina { padding: 0; }
+  .painel { height: 100dvh; min-height: 420px; border: 0; border-radius: 0; }
+  .cabecalho { padding: 20px 16px; gap: 13px; }
+  h1 { font-size: 22px; }
+  .subtitulo { font-size: 11px; }
+  .identificacao, .compositor { padding: 14px 16px; }
+  .conversa { padding: 20px 16px; }
+  .balao { max-width: 92%; padding: 13px 14px; }
+  button { padding: 0 14px; }
+  button span { display: none; }
+}

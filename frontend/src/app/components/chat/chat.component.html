@@ -1,0 +1,59 @@
+<main class="pagina">
+  <section class="painel" aria-labelledby="titulo-chat">
+    <header class="cabecalho">
+      <span class="marca" aria-hidden="true">C</span>
+      <div><p class="sobretitulo">COTI INFORMÁTICA</p><h1 id="titulo-chat">COTI WebChat</h1><p class="subtitulo">Atendimento com Inteligência Artificial</p></div>
+    </header>
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+      <div class="identificacao">
+        <label for="nome">Seu nome</label>
+        <input id="nome" type="text" formControlName="nomeUsuario" placeholder="Como podemos chamar você?" autocomplete="given-name" [readOnly]="!!nomeConfirmado()" aria-describedby="ajuda-nome" [attr.aria-invalid]="formulario.controls.nomeUsuario.touched && formulario.controls.nomeUsuario.invalid" />
+        <p id="ajuda-nome" class="ajuda">
+          @if (formulario.controls.nomeUsuario.touched && formulario.controls.nomeUsuario.invalid) {
+            <span class="erro" role="alert">Informe seu nome para iniciar o atendimento.</span>
+          } @else if (nomeConfirmado()) { Seu nome será mantido durante esta conversa.
+          } @else { Informe seu nome para começar o atendimento. }
+        </p>
+      </div>
+      <div #conversa class="conversa" role="log" aria-label="Histórico da conversa" aria-live="polite" aria-relevant="additions" tabindex="0">
+        @for (mensagem of mensagens(); track $index) {
+          <article class="mensagem" [class.usuario]="mensagem.autor === 'usuario'">
+            <div class="balao">
+              <div class="meta"><span>{{ mensagem.autor === 'usuario' ? nomeConfirmado() : 'Assistente COTI' }}</span><time [attr.datetime]="mensagem.dataHora.toISOString()">{{ mensagem.dataHora | date:'HH:mm' }}</time></div>
+              <p class="texto">{{ mensagem.texto }}</p>
+              @if (mensagem.detalhes; as detalhes) {
+                @if (detalhes.atendimento.encaminharParaAtendente) { <p class="aviso">Esta solicitação poderá ser encaminhada para um atendente.</p> }
+                @if (detalhes.atendimento.interesseIdentificado) { <span class="indicador">Interesse identificado</span> }
+                <details class="detalhes">
+                  <summary>Detalhes da resposta</summary>
+                  <dl>
+                    <dt>Assunto</dt><dd>{{ detalhes.atendimento.assunto }}</dd>
+                    <dt>Curso</dt><dd>{{ detalhes.atendimento.curso || 'Não identificado' }}</dd>
+                    <dt>Informação encontrada</dt><dd>{{ detalhes.atendimento.informacaoEncontrada ? 'Sim' : 'Não' }}</dd>
+                    <dt>Encaminhar para atendente</dt><dd>{{ detalhes.atendimento.encaminharParaAtendente ? 'Sim' : 'Não' }}</dd>
+                    <dt>Tokens de entrada</dt><dd>{{ detalhes.tokensEntrada }}</dd>
+                    <dt>Tokens de saída</dt><dd>{{ detalhes.tokensSaida }}</dd>
+                    <dt>Total de tokens</dt><dd>{{ detalhes.totalTokens }}</dd>
+                    <dt>Custo estimado</dt><dd>US$ {{ detalhes.custoEstimado | number:'1.5-8':'en-US' }}</dd>
+                  </dl>
+                </details>
+              }
+            </div>
+          </article>
+        }
+        @if (carregando()) { <div class="digitando" role="status"><span class="pontos" aria-hidden="true">● ● ●</span> Assistente está digitando...</div> }
+      </div>
+      <div class="compositor">
+        <label for="pergunta">Sua pergunta</label>
+        <div class="linha-envio">
+          <input id="pergunta" type="text" formControlName="pergunta" placeholder="Digite sua pergunta..." autocomplete="off" aria-describedby="ajuda-pergunta" [attr.aria-invalid]="formulario.controls.pergunta.touched && formulario.controls.pergunta.invalid" />
+          <button type="submit" [disabled]="carregando()">{{ carregando() ? 'Aguarde...' : 'Enviar' }} <span aria-hidden="true">↗</span></button>
+        </div>
+        <p id="ajuda-pergunta" class="ajuda">
+          @if (formulario.controls.pergunta.touched && formulario.controls.pergunta.invalid) { <span class="erro" role="alert">Digite uma pergunta.</span>
+          } @else { Pergunte sobre cursos, valores, horários ou inscrições. }
+        </p>
+      </div>
+    </form>
+  </section>
+</main>
